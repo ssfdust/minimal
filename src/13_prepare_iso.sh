@@ -96,7 +96,7 @@ prepare_boot_uefi() {
 
   echo "Creating UEFI boot image file '$WORK_DIR/uefi.img'."
   rm -f $WORK_DIR/uefi.img
-  truncate -s $image_size $WORK_DIR/uefi.img
+  truncate -s 13000000 $WORK_DIR/uefi.img
 
   echo "Attaching hard disk image file to loop device."
   LOOP_DEVICE_HDD=$(losetup -f)
@@ -110,9 +110,9 @@ prepare_boot_uefi() {
   mkdir -p $WORK_DIR/uefi
   mount $WORK_DIR/uefi.img $WORK_DIR/uefi
 
-#  # Add the configuration files for UEFI boot.
-#  cp -r $SRC_DIR/minimal_boot/uefi/* \
-#    $ISOIMAGE
+  # Add the configuration files for UEFI boot.
+  cp -r $SRC_DIR/minimal_boot/uefi/* \
+    $ISOIMAGE
 
   echo "Preparing kernel and rootfs."
   mkdir -p $WORK_DIR/uefi/minimal/$MLL_CONF

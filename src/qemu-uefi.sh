@@ -15,7 +15,7 @@
 #
 #   https://sourceforge.net/projects/edk2/files/OVMF/
 #
-OVMF_LOCATION=~/Downloads/OVMF.fd
+OVMF_LOCATION=/usr/share/edk2/x64/OVMF_CODE.fd
 
 if [ "`uname -m`" = "x86_64" ] ; then
   ARCH="x86_64"
@@ -23,7 +23,8 @@ else
   ARCH="i386"
 fi
 
-cmd="qemu-system-$ARCH -pflash $OVMF_LOCATION -m 128M -cdrom minimal_linux_live.iso -boot d -vga std"
+# cmd="qemu-system-$ARCH -pflash $OVMF_LOCATION -m 128M -cdrom minimal_linux_live.iso -boot d -vga virtio -device virtio-serial-pci -spice port=5930,disable-ticketing=on -device virtserialport,chardev=spicechannel0,name=com.redhat.spice.0 -chardev spicevmc,id=spicechannel0,name=vdagent"
+cmd="qemu-system-$ARCH -pflash $OVMF_LOCATION -m 256M -cdrom minimal_linux_live.iso -boot d -nographic"
 
 if [ "$1" = "-hdd" -o "$1" = "-h" ] ; then
   echo "Starting QEMU with attached ISO image and hard disk."
